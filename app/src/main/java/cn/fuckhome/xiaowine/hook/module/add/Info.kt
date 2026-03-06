@@ -31,6 +31,7 @@ import cn.fuckhome.xiaowine.utils.Utils
 import cn.fuckhome.xiaowine.utils.Utils.XConfig
 import cn.fuckhome.xiaowine.utils.Utils.formatSize
 import cn.fuckhome.xiaowine.utils.Utils.isNull
+import cn.fuckhome.xiaowine.utils.ReceiverUtils
 import com.github.kyuubiran.ezxhelper.init.InitFields.appContext
 import com.github.kyuubiran.ezxhelper.init.InitFields.moduleRes
 import com.github.kyuubiran.ezxhelper.utils.*
@@ -83,7 +84,14 @@ object Info : BaseHook() {
                 }
 
                 mView.addView(mLinearLayout)
-                listOf("MemoryView", "ZarmView", "StorageView", "Uptime", "RunningAppTotal", "RunningServiceTotal").forEach { s ->
+                listOf(
+                    "MemoryView",
+                    "ZarmView",
+                    "StorageView",
+                    "Uptime",
+                    "RunningAppTotal",
+                    "RunningServiceTotal"
+                ).forEach { s ->
                     if (XConfig.getBoolean(s)) {
                         TextViewList.add(s)
                     }
@@ -95,7 +103,8 @@ object Info : BaseHook() {
         Utils.catchNoClass {
             findMethod("com.miui.home.recents.views.RecentsContainer") { name == "onFinishInflate" }.hookAfter {
                 LogUtils.i(moduleRes.getString(R.string.InitAddView))
-                val mTxtMemoryViewGroup = it.thisObject.getObjectAs<ViewGroup>("mTxtMemoryContainer")
+                val mTxtMemoryViewGroup =
+                    it.thisObject.getObjectAs<ViewGroup>("mTxtMemoryContainer")
                 it.thisObject.putObject("mSeparatorForMemoryInfo", View(appContext))
                 for (i in 0 until mTxtMemoryViewGroup.childCount) {
                     mTxtMemoryViewGroup.getChildAt(i).visibility = View.GONE
@@ -137,8 +146,10 @@ object Info : BaseHook() {
                 val mResentsContainerRotation = it.args[0] as Int
                 if (mResentsContainerRotation == 0) {
                     if (XConfig.getUnit()) {
-                        topMargin = (10 + XConfig.getInt("TopMargin0", 4) / 100.0 * heightPixels).toInt()
-                        leftMargin = (10 + XConfig.getInt("LeftMargin0") / 100.0 * widthPixels).roundToInt()
+                        topMargin =
+                            (10 + XConfig.getInt("TopMargin0", 4) / 100.0 * heightPixels).toInt()
+                        leftMargin =
+                            (10 + XConfig.getInt("LeftMargin0") / 100.0 * widthPixels).roundToInt()
                     } else {
                         LogUtils.i(XConfig.getInt("TopMargin0", 4))
                         topMargin = 10 + XConfig.getInt("TopMargin0", 4)
@@ -146,8 +157,12 @@ object Info : BaseHook() {
                     }
                 } else {
                     if (XConfig.getUnit()) {
-                        topMargin = (10 + XConfig.getInt("TopMargin1", 5) / 100.0 * widthPixels).roundToInt()
-                        leftMargin = (10 + XConfig.getInt("LeftMargin1") / 100.0 * heightPixels).roundToInt()
+                        topMargin = (10 + XConfig.getInt(
+                            "TopMargin1",
+                            5
+                        ) / 100.0 * widthPixels).roundToInt()
+                        leftMargin =
+                            (10 + XConfig.getInt("LeftMargin1") / 100.0 * heightPixels).roundToInt()
                     } else {
                         topMargin = 10 + XConfig.getInt("TopMargin1", 5)
                         leftMargin = 10 + XConfig.getInt("LeftMargin1")
@@ -162,7 +177,10 @@ object Info : BaseHook() {
         Utils.catchNoClass {
             findMethod("com.miui.home.recents.views.RecentsContainer") { name == "startRecentsContainerFadeInAnim" }.hookAfter {
                 LogUtils.i(moduleRes.getString(R.string.VisibleView))
-                val params = FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                val params = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.WRAP_CONTENT,
+                    FrameLayout.LayoutParams.WRAP_CONTENT
+                )
                 params.topMargin = topMargin
                 params.leftMargin = leftMargin
                 mLinearLayout.layoutParams = params
@@ -207,7 +225,13 @@ object Info : BaseHook() {
 
 //        广播
         Utils.catchNoClass { appContext.unregisterReceiver(moduleReceiver) }
-        appContext.registerReceiver(moduleReceiver, IntentFilter().apply { addAction("MIUIHOME_Server") })
+
+        ReceiverUtils.safeRegisterReceiver(
+            appContext,
+            moduleReceiver,
+            IntentFilter().apply { addAction("MIUIHOME_Server") },
+            exported = false
+        )
     }
 
     fun updateInfoDate() {
