@@ -24,7 +24,7 @@ android {
     buildToolsVersion = "37.0.0"
 
     defaultConfig {
-        applicationId = "cn.fuckhome.xiaowine"
+        applicationId = "io.github.NotWayOut.fuckhome"
         minSdk = 29
         targetSdk = 35
         // 版本号默认值，可通过 -PversionCode=xxx / -PversionName=xxx 或同名环境变量覆盖
