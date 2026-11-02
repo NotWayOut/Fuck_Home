@@ -11,10 +11,16 @@ on:
         description: "versionName"
         default: "9.9.9"
         required: true
+      changelog:
+        description: "更新日志（发布到 Release 的说明）"
+        default: "- 暂无"
+        required: true
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -32,8 +38,16 @@ jobs:
             -PversionName=${{ inputs.version_name || '9.9.9' }} \
             --console=plain
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: FuckHome-${{ inputs.version_name || '9.9.9' }}
-          path: app/build/outputs/apk/release/*.apk
+      - name: Publish Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="v${{ inputs.version_name }}"
+          apk="app/build/outputs/apk/release/FuckHome-${tag}.apk"
+          mv "$(ls app/build/outputs/apk/release/*.apk | head -n1)" "$apk"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$apk" --clobber
+            gh release edit "$tag" --title "$tag" --notes "${{ inputs.changelog }}"
+          else
+            gh release create "$tag" "$apk" --title "$tag" --notes "${{ inputs.changelog }}" --latest
+          fi
