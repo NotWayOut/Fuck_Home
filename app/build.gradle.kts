@@ -27,8 +27,11 @@ android {
         applicationId = "cn.fuckhome.xiaowine"
         minSdk = 29
         targetSdk = 35
-        versionCode = 13
-        versionName = "2.3.4"
+        // 版本号默认值，可通过 -PversionCode=xxx / -PversionName=xxx 或同名环境变量覆盖
+        versionCode = (project.findProperty("versionCode") as String?)?.toIntOrNull()
+            ?: System.getenv("VERSION_CODE")?.toIntOrNull() ?: 13
+        versionName = (project.findProperty("versionName") as String?)
+            ?: System.getenv("VERSION_NAME") ?: "2.3.4"
         val buildTime = System.currentTimeMillis()
         buildConfigField("String", "BUILD_TIME", "\"$buildTime\"")
     }
