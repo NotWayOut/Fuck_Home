@@ -11,7 +11,7 @@
 ```bash
 git clone https://github.com/NotWayOut/Fuck_Home.git
 cd Fuck_Home
-./gradlew :app:assembleRelease
+.\gradlew :app:assembleRelease -PversionCode=9999 -PversionName="9.9.9"
 ```
 
 签名配置读取 `local.properties`（`STORE_FILE` / `STORE_PASSWORD` / `KEY_ALIAS` / `KEY_PWD`）或同名环境变量，缺失时 release 退化为 debug 签名。
