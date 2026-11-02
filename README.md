@@ -24,6 +24,7 @@ cd Fuck_Home
 
 - [xiaowine](https://github.com/xiaowine) — 原作者
 - [NotWayOut](https://github.com/NotWayOut) — libXposed API 101 重构
+- [大肥鱼]
 
 ### 引用与致谢
 
