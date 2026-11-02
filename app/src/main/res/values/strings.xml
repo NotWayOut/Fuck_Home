@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<resources>
+    <string name="About">About the app</string>
+    <string name="AboutTips"/>
+    <string name="AddInformation">Add Information</string>
+    <string name="AddInformationStyle">Customizing the style</string>
+    <string name="AppName">Fuck•MiuiHome</string>
+    <string name="Author">Author</string>
+    <string name="BackgroundColor">Background color and transparency</string>
+    <string name="Backup">Save Settings</string>
+    <string name="BgCorners">Rounded corners of the background</string>
+    <string name="BgCornersTips">0~100</string>
+    <string name="Uptime">Uptime</string>
+    <string name="BootTimeView">Uptime %s</string>
+    <string name="BuildTime">Compilation time</string>
+    <string name="CENTER">Centered</string>
+    <string name="Cancel">Cancel</string>
+    <string name="ChooseFont">Choose a font</string>
+    <string name="Color">Font color and transparency</string>
+    <string name="Coolapk">Coolapk</string>
+    <string name="CustomFont">Custom Fonts</string>
+    <string name="CustomFontFail">Couldn\'t install custom font</string>
+    <string name="CustomFontSuccess">The custom font has been successfully installed</string>
+    <string name="DebugMode">Debug mode</string>
+    <string name="DeleteFont">Remove Font</string>
+    <string name="DeleteFontFail">Couldn\'t delete custom font</string>
+    <string name="DeleteFontSuccess">Successfully removed the custom font</string>
+    <string name="END">On the right edge</string>
+    <string name="EzXHelper">EzXHelper</string>
+    <string name="GoneView">Hide Controls</string>
+    <string name="Gravity">Text alignment</string>
+    <string name="HideDeskIcon">Hide the icon on the desktop</string>
+    <string name="HookFailed">Hook is not implemented</string>
+    <string name="HookSuccess">Hook is implemented</string>
+    <string name="InitAddView">Initialize and add widgets</string>
+    <string name="InitRootView">Initialize the root control</string>
+    <string name="InputError">The input range is incorrect!</string>
+    <string name="LeftMargin0">Indent to the left of the screen when the screen is vertical</string>
+    <string name="LeftMargin1">Indent to the left of the screen when the screen is horizontal</string>
+    <string name="LSPosed">LSPosed</string>
+    <string name="LyricColorError">The color code is incorrect!</string>
+    <string name="LyricColorTips">Please enter a hexadecimal color code, for example: #C0C0C0</string>
+    <string name="MainSwitch">Main switch</string>
+    <string name="MarginTips1">Range：-100%~100%</string>
+    <string name="MarginTips2">Range：-2000~2000</string>
+    <string name="Memory">Display RAM</string>
+    <string name="MemoryView" formatted="false">RAM %s | %s | %s%%</string>
+    <string name="MemoryView2" formatted="false">%s | %s</string>
+    <string name="Menu">Menu</string>
+    <string name="ModulePackName">Module package name</string>
+    <string name="ModuleVersion">Module version</string>
+    <string name="Ok">OK</string>
+    <string name="Pixel">Pixels</string>
+    <string name="ReStartHome">Restart the desktop</string>
+    <string name="Recovery">Restoring Settings</string>
+    <string name="ResetModule">Resetting the module</string>
+    <string name="ResetModuleDialog">Do you want to reset the module?</string>
+    <string name="ResetModuleDialogTips">The module is OK, please do not reset it at will.</string>
+    <string name="ResetSuccess">Reset successfully completed!</string>
+    <string name="RunningAppTotal">Displaying the total number of running software</string>
+    <string name="RunningAppTotalView">Apps %s</string>
+    <string name="RunningServiceTotal">Displaying the total number of running services</string>
+    <string name="RunningServiceTotalView">Services %s</string>
+    <string name="START">On the left edge</string>
+    <string name="Scale">Screen Ratio</string>
+    <string name="Storage">Display ROM</string>
+    <string name="StorageView" formatted="false">ROM %s | %s | %s%%</string>
+    <string name="StorageView2" formatted="false">%s | %s</string>
+    <string name="ThkListTips">List of thanks</string>
+    <string name="TopMargin0">Indentation at the top of the screen when the screen is vertical</string>
+    <string name="TopMargin1">Indentation at the top of the screen when the screen is horizontal</string>
+    <string name="UnitMargin">Alignment Unit</string>
+    <string name="UpdateView">Update widget data</string>
+    <string name="VisibleView">Display Management</string>
+    <string name="Xposed">Xposed</string>
+    <string name="XposedDesc">Change the RAM information in the recent MIUI desktop menu to the real value and add some information</string>
+    <string name="Zarm">Display zRAM</string>
+    <string name="ZarmView" formatted="false">zRAM %s | %s | %s%%</string>
+    <string name="ZarmView2" formatted="false">%s | %s</string>
+    <string name="blockmiui">blockmiui</string>
+    <string name="warning">Warning if the remaining memory is less than 20%</string>
+    <string name="CleanMode">Clean mode</string>
+</resources>
