@@ -11,8 +11,6 @@ on:
         description: "versionName"
         default: "9.9.9"
         required: true
-  push:
-    branches: [master, main]
 
 jobs:
   build:
