@@ -24,7 +24,7 @@ cd Fuck_Home
 
 - [xiaowine](https://github.com/xiaowine) — 原作者
 - [NotWayOut](https://github.com/NotWayOut) — libXposed API 101 重构
-- [大肥鱼]
+- 大肥鱼
 
 ### 引用与致谢
 
@@ -36,7 +36,7 @@ cd Fuck_Home
 - [miuix](https://github.com/compose-miuix-ui/miuix) — Compose Multiplatform UI 库
 - [XiaomiHelper](https://github.com/HowieHChen/XiaomiHelper)
 - [KtSh](https://github.com/jaredrummler/KtSh) — Shell 执行库
-- [群友]20块钱的大肥鱼跟免费鸡蛋
+- 群友 — 20块钱的大肥鱼跟免费鸡蛋
 
 ## 许可
 
