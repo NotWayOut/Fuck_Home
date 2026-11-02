@@ -4,7 +4,8 @@ xposed-api = "101.0.0"
 xposed-service = "101.0.0"
 activity = "1.9.3"
 kotlin = "2.2.10"
-miuix = "0.9.4"
+miuix = "0.9.1"
+navigationevent = "1.1.1"
 junit = "4.13.2"
 json = "20240303"
 
@@ -20,5 +21,6 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 miuix-ui = { module = "top.yukonga.miuix.kmp:miuix-ui", version.ref = "miuix" }
 miuix-preference = { module = "top.yukonga.miuix.kmp:miuix-preference", version.ref = "miuix" }
 miuix-icons = { module = "top.yukonga.miuix.kmp:miuix-icons", version.ref = "miuix" }
+navigationevent-compose = { group = "androidx.navigationevent", name = "navigationevent-compose", version.ref = "navigationevent" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 org-json = { group = "org.json", name = "json", version.ref = "json" }

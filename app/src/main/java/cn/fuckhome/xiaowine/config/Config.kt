@@ -3,6 +3,7 @@ package cn.fuckhome.xiaowine.config
 import android.content.Context
 import android.content.SharedPreferences
 import android.view.Gravity
+import cn.fuckhome.xiaowine.App
 import cn.fuckhome.xiaowine.hook.MainHook
 
 /** 模块与桌面进程共享的配置组名 */
@@ -81,14 +82,26 @@ class Config(val prefs: SharedPreferences) {
     }
 }
 
-/** 被 Hook 进程中的只读配置（由框架提供的远程首选项） */
-val xConfig: Config by lazy { Config(MainHook.instance.getRemotePreferences(PREFS_GROUP)) }
+/**
+ * 被 Hook 进程中的只读配置（由框架提供的远程首选项）。
+ *
+ * 独立成对象而非文件顶层属性：入口类 MainHook 继承 compileOnly 的 XposedModule，
+ * 若在 ConfigKt 的静态初始化中引用它，应用进程加载 ConfigKt 时即会因缺少超类崩溃。
+ * 本对象仅在 Hook 进程中被加载。
+ */
+object RemoteConfig {
+    val instance: Config by lazy { Config(MainHook.instance.getRemotePreferences(PREFS_GROUP)) }
+}
 
 /**
  * 模块自身进程中的可写配置。
  *
- * 统一使用模块私有的 shared_prefs 文件：设置界面（PreferenceFragmentCompat）与
- * 备份/恢复均读写同一文件，框架通过该目录向被 Hook 进程提供只读远程配置。
+ * 必须通过 XposedService 的远程首选项写入：libxposed 的远程配置存储于框架数据库中
+ * （LSPosed database），被 Hook 进程经 getRemotePreferences 读取的正是该存储；
+ * 直接写模块私有 shared_prefs 文件不会被 hook 侧看到。
+ * 框架未绑定时退化为应用私有文件。
  */
-fun localConfig(context: Context): Config =
-    Config(context.getSharedPreferences(PREFS_GROUP, Context.MODE_PRIVATE))
+fun localConfig(context: Context): Config = Config(
+    App.mService?.getRemotePreferences(PREFS_GROUP)
+        ?: context.getSharedPreferences(PREFS_GROUP, Context.MODE_PRIVATE)
+)

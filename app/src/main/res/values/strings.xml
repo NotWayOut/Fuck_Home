@@ -5,7 +5,11 @@
     <string name="AddInformation">Add Information</string>
     <string name="AddInformationStyle">Customizing the style</string>
     <string name="AppName">Fuck•MiuiHome</string>
-    <string name="Author">Author</string>
+    <string name="Author">Authors</string>
+    <string name="AuthorXiaowine">xiaowine</string>
+    <string name="AuthorXiaowineSummary">Original author</string>
+    <string name="AuthorNotWayOut">NotWayOut</string>
+    <string name="AuthorNotWayOutSummary">libXposed API 101 refactor</string>
     <string name="BackgroundColor">Background color and transparency</string>
     <string name="Backup">Save Settings</string>
     <string name="BgCorners">Rounded corners of the background</string>
@@ -16,10 +20,12 @@
     <string name="CENTER">Centered</string>
     <string name="Cancel">Cancel</string>
     <string name="ChooseFont">Choose a font</string>
+    <string name="ChooseFontSummary">Import from file</string>
+    <string name="FontPath">Font file path</string>
+    <string name="FontPathTips">Enter the font file path (ttf/otf/ttc)</string>
     <string name="Color">Font color and transparency</string>
     <string name="Coolapk">Coolapk</string>
-    <string name="CustomFont">Custom Fonts</string>
-    <string name="CustomFontFail">Couldn\'t install custom font</string>
+    <string name="CustomFont">Custom Fonts</string>    <string name="CustomFontFail">Couldn\'t install custom font</string>
     <string name="CustomFontSuccess">The custom font has been successfully installed</string>
     <string name="DebugMode">Debug mode</string>
     <string name="DeleteFont">Remove Font</string>
@@ -27,6 +33,18 @@
     <string name="DeleteFontSuccess">Successfully removed the custom font</string>
     <string name="END">On the right edge</string>
     <string name="EzXHelper">EzXHelper</string>
+    <string name="FrameworkOk">Running normally</string>
+    <string name="FrameworkOkTips">libXposed API 101 features available</string>
+    <string name="FrameworkInactive">Module inactive</string>
+    <string name="FrameworkInactiveTips">Activate this module in LSPosed and select its scope</string>
+    <string name="FrameworkUnsupported">Framework unsupported</string>
+    <string name="FrameworkUnsupportedTips">The framework API version is too old, API 101 is required</string>
+    <string name="FrameworkNoRoot">Root required</string>
+    <string name="FrameworkNoRootTips">Without root, restarting the desktop is unavailable</string>
+    <string name="FrameworkStats">Framework API %1$d · Scope %2$d · Root %3$s</string>
+    <string name="RootGranted">granted</string>
+    <string name="RootDenied">denied</string>
+    <string name="RootChecking">checking</string>
     <string name="GoneView">Hide Controls</string>
     <string name="Gravity">Text alignment</string>
     <string name="HideDeskIcon">Hide the icon on the desktop</string>
@@ -38,6 +56,9 @@
     <string name="LeftMargin0">Indent to the left of the screen when the screen is vertical</string>
     <string name="LeftMargin1">Indent to the left of the screen when the screen is horizontal</string>
     <string name="LSPosed">LSPosed</string>
+    <string name="XiaomiHelper">XiaomiHelper</string>
+    <string name="libXposed">libXposed API</string>
+    <string name="miuix">miuix</string>
     <string name="LyricColorError">The color code is incorrect!</string>
     <string name="LyricColorTips">Please enter a hexadecimal color code, for example: #C0C0C0</string>
     <string name="MainSwitch">Main switch</string>
@@ -46,7 +67,9 @@
     <string name="Memory">Display RAM</string>
     <string name="MemoryView" formatted="false">RAM %s | %s | %s%%</string>
     <string name="MemoryView2" formatted="false">%s | %s</string>
-    <string name="Menu">Menu</string>
+    <string name="Menu">Settings</string>
+    <string name="ModuleSettings">Module settings</string>
+    <string name="ModuleSettingsSummary">Main switch and module status</string>
     <string name="ModulePackName">Module package name</string>
     <string name="ModuleVersion">Module version</string>
     <string name="Ok">OK</string>
@@ -67,6 +90,18 @@
     <string name="StorageView" formatted="false">ROM %s | %s | %s%%</string>
     <string name="StorageView2" formatted="false">%s | %s</string>
     <string name="ThkListTips">List of thanks</string>
+    <string name="ThemeSettings">Theme</string>
+    <string name="ThemeMode">Theme mode</string>
+    <string name="ThemeModeLight">Light</string>
+    <string name="ThemeModeDark">Dark</string>
+    <string name="ThemeModeSystem">Follow system</string>
+    <string name="UseMiuixMonet">Custom colors</string>
+    <string name="UseMiuixMonetSummary">Use miuix Monet color engine</string>
+    <string name="UseDynamicColor">Dynamic color</string>
+    <string name="UseDynamicColorSummary">Pick seed color from system wallpaper (Android 12+)</string>
+    <string name="PaletteStyle">Palette style</string>
+    <string name="ColorSpec">Color spec</string>
+    <string name="ThemeColor">Theme color</string>
     <string name="TopMargin0">Indentation at the top of the screen when the screen is vertical</string>
     <string name="TopMargin1">Indentation at the top of the screen when the screen is horizontal</string>
     <string name="UnitMargin">Alignment Unit</string>

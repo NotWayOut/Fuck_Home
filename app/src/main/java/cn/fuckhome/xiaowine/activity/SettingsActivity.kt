@@ -8,62 +8,31 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import cn.fuckhome.xiaowine.BuildConfig
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
+import android.app.AlertDialog
 import cn.fuckhome.xiaowine.R
-import cn.fuckhome.xiaowine.config.KEY_DEBUG
 import cn.fuckhome.xiaowine.config.KEY_HIDE_LAUNCHER_ICON
-import cn.fuckhome.xiaowine.config.KEY_MAIN_SWITCH
-import cn.fuckhome.xiaowine.config.KEY_MEMORY_VIEW
-import cn.fuckhome.xiaowine.config.KEY_ZARM_VIEW
 import cn.fuckhome.xiaowine.config.localConfig
+import cn.fuckhome.xiaowine.ui.SettingsActions
+import cn.fuckhome.xiaowine.ui.SettingsApp
+import cn.fuckhome.xiaowine.ui.ThemeState
+import com.jaredrummler.ktsh.Shell
 
-class SettingsActivity : AppCompatActivity() {
-
-    val config get() = localConfig(this)
+class SettingsActivity : ComponentActivity() {
 
     private var pendingOpenDocument: ((Uri?) -> Unit)? = null
     private var pendingCreateDocument: ((Uri?) -> Unit)? = null
 
-    private val appReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            when (intent.getStringExtra("app_Type")) {
-                "CopyFont" -> showDialog(
-                    R.string.CustomFont,
-                    if (intent.getBooleanExtra("CopyFont", false)) {
-                        getString(R.string.CustomFontSuccess)
-                    } else {
-                        getString(R.string.CustomFontFail) + "\n" + intent.getStringExtra("font_error")
-                    }
-                )
-
-                "DeleteFont" -> showDialog(
-                    R.string.DeleteFont,
-                    if (intent.getBooleanExtra("DeleteFont", false)) {
-                        getString(R.string.DeleteFontSuccess)
-                    } else {
-                        getString(R.string.DeleteFontFail)
-                    }
-                )
-            }
-        }
-    }
-
-    /**
-     * 文档选择器：选择任意文件。
-     * 使用通配 MIME 避免部分设备为 .json 文件分配非 application/json 类型而导致无法选择。
-     */
     private val openDocumentLauncher =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             pendingOpenDocument?.invoke(uri)
             pendingOpenDocument = null
         }
 
-    /** 创建备份文档 */
     private val createDocumentLauncher = registerForActivityResult(
         ActivityResultContracts.CreateDocument(MIME_JSON)
     ) { uri ->
@@ -71,84 +40,104 @@ class SettingsActivity : AppCompatActivity() {
         pendingCreateDocument = null
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        if (supportFragmentManager.findFragmentById(R.id.fragment_container) == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, MainFragment())
-                .commit()
+    private val appReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val titleRes: Int
+            val message: String
+            when (intent.getStringExtra("app_Type")) {
+                "CopyFont" -> {
+                    titleRes = R.string.CustomFont
+                    message = if (intent.getBooleanExtra("CopyFont", false)) {
+                        getString(R.string.CustomFontSuccess)
+                    } else {
+                        getString(R.string.CustomFontFail) + "\n" + intent.getStringExtra("font_error")
+                    }
+                }
+
+                "DeleteFont" -> {
+                    titleRes = R.string.DeleteFont
+                    message = if (intent.getBooleanExtra("DeleteFont", false)) {
+                        getString(R.string.DeleteFontSuccess)
+                    } else {
+                        getString(R.string.DeleteFontFail)
+                    }
+                }
+
+                else -> return
+            }
+            AlertDialog.Builder(this@SettingsActivity)
+                .setTitle(titleRes)
+                .setMessage(message)
+                .setPositiveButton(R.string.Ok, null)
+                .show()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // 边到边显示：状态栏/导航栏透明，由界面自行处理 Insets，避免纯黑状态栏
+        enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+        ThemeState.init(localConfig(this).prefs)
         ContextCompat.registerReceiver(
             this,
             appReceiver,
             IntentFilter(ACTION_APP_SERVER),
             ContextCompat.RECEIVER_EXPORTED
         )
-        applyLauncherAliasState()
-        applyDebugDefaults()
+applyLauncherAliasState()
+        setContent {
+            SettingsApp(
+                actions = SettingsActions(
+                    pickDocument = { onPicked ->
+                        pendingOpenDocument = onPicked
+                        openDocumentLauncher.launch(arrayOf("*/*"))
+                    },
+                    createBackupDocument = { fileName, onCreated ->
+                        pendingCreateDocument = onCreated
+                        createDocumentLauncher.launch(fileName)
+                    },
+                    onHideIconChange = { hide -> setLauncherAliasEnabled(!hide) },
+                    onReset = {
+                        localConfig(this).clear()
+                        recreate()
+                    },
+                    onRestartHome = {
+                        Thread { Shell("su").run("am force-stop com.miui.home") }.start()
+                    },
+                    onRefresh = { recreate() },
+                )
+            )
+        }
     }
 
+
+    /** 按配置应用桌面图标（launcher 别名）显隐。开关打开 = 隐藏图标 */
     override fun onDestroy() {
         unregisterReceiver(appReceiver)
         super.onDestroy()
     }
 
-    fun showScreen(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
-
-    /** 选择文档（备份恢复、自定义字体等），结果通过 [onPicked] 回调 */
-    fun pickDocument(onPicked: (Uri?) -> Unit) {
-        pendingOpenDocument = onPicked
-        openDocumentLauncher.launch(arrayOf("*/*"))
-    }
-
-    /** 创建备份文档，结果通过 [onCreated] 回调 */
-    fun createBackupDocument(fileName: String, onCreated: (Uri?) -> Unit) {
-        pendingCreateDocument = onCreated
-        createDocumentLauncher.launch(fileName)
-    }
-
-    /** 按配置应用桌面图标（launcher 别名）显隐；恢复配置后需调用。开关打开 = 隐藏图标 */
     fun applyLauncherAliasState() {
+        val hide = localConfig(this).prefs.getBoolean(KEY_HIDE_LAUNCHER_ICON, false)
+        setLauncherAliasEnabled(!hide)
+    }
+
+    private fun setLauncherAliasEnabled(enabled: Boolean) {
         val alias = ComponentName(this, "$packageName.launcher")
-        val hide = config.prefs.getBoolean(KEY_HIDE_LAUNCHER_ICON, false)
         packageManager.setComponentEnabledSetting(
             alias,
-            if (hide) {
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-            } else {
+            if (enabled) {
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            } else {
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
             },
             PackageManager.DONT_KILL_APP
         )
     }
 
-    /** Debug 构建下默认打开常用开关，便于开发调试 */
-    private fun applyDebugDefaults() {
-        if (!BuildConfig.DEBUG) return
-        config.prefs.edit()
-            .putBoolean(KEY_MAIN_SWITCH, true)
-            .putBoolean(KEY_MEMORY_VIEW, true)
-            .putBoolean(KEY_ZARM_VIEW, true)
-            .putBoolean(KEY_DEBUG, true)
-            .apply()
-    }
-
-    private fun showDialog(titleRes: Int, message: String) {
-        AlertDialog.Builder(this)
-            .setTitle(titleRes)
-            .setMessage(message)
-            .setPositiveButton(R.string.Ok, null)
-            .show()
-    }
-
     private companion object {
         const val ACTION_APP_SERVER = "MIUIHOME_App_Server"
+
         const val MIME_JSON = "application/json"
     }
 }

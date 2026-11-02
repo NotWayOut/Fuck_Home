@@ -5,7 +5,7 @@ import android.content.res.AssetManager
 import android.content.res.Resources
 import cn.fuckhome.xiaowine.R
 import cn.fuckhome.xiaowine.config.KEY_MAIN_SWITCH
-import cn.fuckhome.xiaowine.config.xConfig
+import cn.fuckhome.xiaowine.config.RemoteConfig
 import cn.fuckhome.xiaowine.hook.module.add.Info
 import cn.fuckhome.xiaowine.utils.LogUtils
 import io.github.libxposed.api.XposedModule
@@ -20,9 +20,7 @@ import io.github.libxposed.api.XposedModuleInterface.PackageReadyParam
 class MainHook : XposedModule() {
 
     companion object {
-        const val PACKAGE_MIUI_HOME = "com.miui.home"
-        const val PACKAGE_POCO_HOME = "com.mi.android.globallauncher"
-        val homeList = arrayOf(PACKAGE_POCO_HOME, PACKAGE_MIUI_HOME)
+        val homeList = HomePackages.list
 
         lateinit var instance: MainHook
             private set
@@ -58,7 +56,7 @@ class MainHook : XposedModule() {
         targetClassLoader = param.classLoader
         if (param.packageName !in homeList) return
         LogUtils.i("onPackageReady: ${param.packageName}")
-        if (!xConfig.getBoolean(KEY_MAIN_SWITCH)) {
+        if (!RemoteConfig.instance.getBoolean(KEY_MAIN_SWITCH)) {
             LogUtils.i("总开关未打开")
             return
         }

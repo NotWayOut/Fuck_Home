@@ -1,6 +1,7 @@
 package cn.fuckhome.xiaowine
 
 import android.app.Application
+import androidx.compose.runtime.mutableStateOf
 import io.github.libxposed.service.XposedService
 import io.github.libxposed.service.XposedServiceHelper
 import kotlin.concurrent.Volatile
@@ -8,6 +9,9 @@ import kotlin.concurrent.Volatile
 class App : Application(), XposedServiceHelper.OnServiceListener {
 
     companion object {
+        /** 供 Compose 观察的服务绑定状态 */
+        val serviceState = mutableStateOf<XposedService?>(null)
+
         @Volatile
         var mService: XposedService? = null
             private set
@@ -20,9 +24,11 @@ class App : Application(), XposedServiceHelper.OnServiceListener {
 
     override fun onServiceBind(service: XposedService) {
         mService = service
+        serviceState.value = service
     }
 
     override fun onServiceDied(service: XposedService) {
         mService = null
+        serviceState.value = null
     }
 }

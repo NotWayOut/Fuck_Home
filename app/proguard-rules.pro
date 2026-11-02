@@ -3,3 +3,8 @@
 -keep,allowoptimization,allowobfuscation public class * extends io.github.libxposed.api.XposedModule {
     public <init>();
 }
+
+# androidx.window 为部分 androidx 库的可选依赖，R8 需要忽略缺失类
+-dontwarn androidx.window.**
+-dontwarn androidx.window.extensions.**
+-dontwarn androidx.window.core.**

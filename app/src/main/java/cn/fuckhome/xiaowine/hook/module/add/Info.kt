@@ -3,8 +3,8 @@ package cn.fuckhome.xiaowine.hook.module.add
 import android.app.ActivityManager
 import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
@@ -39,7 +39,7 @@ import cn.fuckhome.xiaowine.config.KEY_UPTIME
 import cn.fuckhome.xiaowine.config.KEY_UNIT
 import cn.fuckhome.xiaowine.config.KEY_WARNING
 import cn.fuckhome.xiaowine.config.KEY_ZARM_VIEW
-import cn.fuckhome.xiaowine.config.xConfig
+import cn.fuckhome.xiaowine.config.RemoteConfig
 import cn.fuckhome.xiaowine.hook.MainHook
 import cn.fuckhome.xiaowine.utils.FileUtils
 import cn.fuckhome.xiaowine.utils.LogUtils
@@ -65,10 +65,8 @@ object Info {
     private const val RECENTS_CONTAINER = "com.miui.home.recents.views.RecentsContainer"
 
     /** 桌面进程广播：来自模块设置界面的字体操作 */
-    private const val ACTION_HOME_SERVER = "MIUIHOME_Server"
 
     /** 模块进程广播：桌面进程回传字体操作结果 */
-    private const val ACTION_APP_SERVER = "MIUIHOME_App_Server"
 
     /** 剩余内存低于该百分比时以红色警示 */
     private const val WARNING_THRESHOLD = 20
@@ -88,7 +86,7 @@ object Info {
 
     private val appContext: Context get() = MainHook.appContext
     private val moduleRes get() = MainHook.moduleRes
-    private val config get() = xConfig
+    private val config get() = RemoteConfig.instance
 
     private val displayMetrics by lazy { appContext.resources.displayMetrics }
     private val widthPixels by lazy { displayMetrics.widthPixels }
@@ -103,6 +101,48 @@ object Info {
         hookFadeIn()
         hookFadeOut()
         registerFontReceiver()
+        registerConfigListener()
+    }
+
+    /** 监听配置变化，热更新信息项与样式，无需重启桌面 */
+    private fun registerConfigListener() {
+        runCatching {
+            RemoteConfig.instance.prefs.registerOnSharedPreferenceChangeListener { _, _ ->
+                handler.post {
+                    runCatching {
+                        if (!::infoLayout.isInitialized || !::defaultTextColors.isInitialized) return@runCatching
+                        refreshEnabledKeys()
+                        createInfoViews()
+                        (infoLayout.background as? GradientDrawable)?.let { background ->
+                            background.setColor(Color.parseColor(config.backgroundColor))
+                            background.cornerRadius = config.backgroundCorners.toFloat()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun refreshEnabledKeys() {
+        enabledKeys.clear()
+        infoKeys.forEach { key -> if (config.getBoolean(key)) enabledKeys.add(key) }
+    }
+
+    private fun createInfoViews() {
+        textViews.clear()
+        infoLayout.removeAllViews()
+        enabledKeys.forEach { key ->
+            val view = TextView(appContext).apply {
+                applyTextColor(this, null)
+                gravity = config.gravity
+                textSize = 12f
+                marqueeRepeatLimit = -1
+                isSingleLine = true
+                maxLines = 1
+            }
+            infoLayout.addView(view)
+            textViews[key] = view
+        }
     }
 
     /* -------------------------------------- Hook -------------------------------------- */
@@ -124,8 +164,7 @@ object Info {
                 }
                 infoLayout = layout
                 (chain.thisObject as FrameLayout).addView(layout)
-                enabledKeys.clear()
-                infoKeys.forEach { key -> if (config.getBoolean(key)) enabledKeys.add(key) }
+                refreshEnabledKeys()
                 null
             }
         }
@@ -145,19 +184,7 @@ object Info {
                 }
                 defaultTextColors =
                     recentsContainer.getObjectFieldAs<TextView>("mTxtMemoryInfo1").textColors
-                textViews.clear()
-                enabledKeys.forEach { key ->
-                    val view = TextView(appContext).apply {
-                        applyTextColor(this, null)
-                        gravity = config.gravity
-                        textSize = 12f
-                        marqueeRepeatLimit = -1
-                        isSingleLine = true
-                        maxLines = 1
-                    }
-                    infoLayout.addView(view)
-                    textViews[key] = view
-                }
+                createInfoViews()
                 null
             }
         }
@@ -334,6 +361,7 @@ object Info {
         }
     }
 
+
     /* ---------------------------------- 自定义字体广播 ---------------------------------- */
 
     private fun registerFontReceiver() {
@@ -401,4 +429,7 @@ object Info {
             appContext.sendBroadcast(intent)
         }
     }
+
+    private const val ACTION_HOME_SERVER = "MIUIHOME_Server"
+    private const val ACTION_APP_SERVER = "MIUIHOME_App_Server"
 }
