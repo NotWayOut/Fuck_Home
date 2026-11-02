@@ -1,6 +1,6 @@
 ### MIUI桌面增强模块
 
-墨桌的api101版本，ui换成miuix
+墨桌的api101版本，ui换成miuix，使用了热刷新
 
 应该适配miui12~os4，如果是rust桌面则不适配
 
