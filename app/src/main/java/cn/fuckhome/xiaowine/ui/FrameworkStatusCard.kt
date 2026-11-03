@@ -106,7 +106,7 @@ fun FrameworkStatusCard() {
                             FrameworkStatus.Inactive -> R.string.FrameworkInactiveTips
                         },
                         frameworkName,
-                        apiVersion ?: REQUIRED_API,
+                        REQUIRED_API,
                     ),
                     color = colors.content,
                     style = MiuixTheme.textStyles.body2,
