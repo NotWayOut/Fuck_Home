@@ -112,17 +112,14 @@
     <string name="ColorSpec">色彩规范</string>
     <string name="ThemeColor">主题色</string>
     <string name="FrameworkOk">运行正常</string>
-    <string name="FrameworkOkTips">libXposed API 101 特性可用</string>
+    <string name="FrameworkOkTips">通过 %1$s API %2$d 激活</string>
     <string name="FrameworkInactive">模块未激活</string>
     <string name="FrameworkInactiveTips">请在 LSPosed 中激活模块并勾选作用域</string>
     <string name="FrameworkUnsupported">框架不受支持</string>
     <string name="FrameworkUnsupportedTips">当前框架 API 版本过低，需支持 API 101</string>
     <string name="FrameworkNoRoot">缺少 Root 权限</string>
     <string name="FrameworkNoRootTips">未获取 Root，重启桌面功能不可用</string>
-    <string name="FrameworkStats">框架 API %1$d · 作用域 %2$d 项 · Root %3$s</string>
-    <string name="RootGranted">已授权</string>
-    <string name="RootDenied">未授权</string>
-    <string name="RootChecking">检测中</string>
+
     <string name="ChooseFontSummary">从文件导入</string>
     <string name="FontPath">字体文件路径</string>
     <string name="FontPathTips">输入字体文件路径（ttf/otf/ttc）</string>
