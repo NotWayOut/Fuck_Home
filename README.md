@@ -6,6 +6,8 @@
 
 如果miui11能用直接提pr或者issue
 
+原项目说不允许分发，issue也很久没反应，所以不提供预构建产物
+
 ## 效果展示
 
 <div align="center">
@@ -39,7 +41,7 @@ cd Fuck_Home
 - [blockmiui](https://github.com/Block-Network/blockmiui)
 - [EzXHelper](https://github.com/KyuubiRan/EzXHelper)
 - [miuix](https://github.com/compose-miuix-ui/miuix) — Compose Multiplatform UI 库
-- [XiaomiHelper](https://github.com/HowieHChen/XiaomiHelper)
+- [XiaomiHelper](https://github.com/HowieHChen/XiaomiHelper) — 参考了关于页
 - [KtSh](https://github.com/jaredrummler/KtSh) — Shell 执行库
 - 群友 — 20块钱的大肥鱼跟免费鸡蛋
 
