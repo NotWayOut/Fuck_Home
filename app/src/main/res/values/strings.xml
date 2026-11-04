@@ -41,6 +41,7 @@
     <string name="FrameworkUnsupportedTips">The framework API version is too old, API 101 is required</string>
     <string name="FrameworkNoRoot">Root required</string>
     <string name="FrameworkNoRootTips">Without root, restarting the desktop is unavailable</string>
+    <string name="ModuleVersionLine">Module version: %1$s</string>
     <string name="GoneView">Hide Controls</string>
     <string name="Gravity">Text alignment</string>
     <string name="HideDeskIcon">Hide the icon on the desktop</string>

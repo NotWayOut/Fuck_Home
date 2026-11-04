@@ -119,6 +119,7 @@
     <string name="FrameworkUnsupportedTips">当前框架 API 版本过低，需支持 API 101</string>
     <string name="FrameworkNoRoot">缺少 Root 权限</string>
     <string name="FrameworkNoRootTips">未获取 Root，重启桌面功能不可用</string>
+    <string name="ModuleVersionLine">模块版本：%1$s</string>
 
     <string name="ChooseFontSummary">从文件导入</string>
     <string name="FontPath">字体文件路径</string>
