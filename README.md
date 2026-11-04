@@ -34,7 +34,7 @@ cd Fuck_Home
 - [blockmiui](https://github.com/Block-Network/blockmiui)
 - [EzXHelper](https://github.com/KyuubiRan/EzXHelper)
 - [miuix](https://github.com/compose-miuix-ui/miuix) — Compose Multiplatform UI 库
-- [XiaomiHelper](https://github.com/HowieHChen/XiaomiHelper)
+- [XiaomiHelper](https://github.com/HowieHChen/XiaomiHelper) — 参考了关于页
 - [KtSh](https://github.com/jaredrummler/KtSh) — Shell 执行库
 - 群友 — 20块钱的大肥鱼跟免费鸡蛋
 
