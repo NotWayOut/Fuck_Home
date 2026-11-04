@@ -10,9 +10,9 @@
 
 ## 效果
 
-<div align="center">
-  <img src="Screenshot_2026-11-04-22-43-02-187_com.miui.home.webp" width="30%">
- </div>
+<img src="Screenshot_2026-11-04-22-43-02-187_com.miui.home.webp" width="30%">
+
+图中为OS3 A15
 
 ## 构建
 
