@@ -125,4 +125,20 @@
     <string name="FontPath">字体文件路径</string>
     <string name="FontPathTips">输入字体文件路径（ttf/otf/ttc）</string>
 
+    <!-- 关于页 -->
+    <string name="Other">其它</string>
+    <string name="BasedOnMiuix">此应用基于 miuix</string>
+    <string name="BasedOnMiuixSummary">Compose Multiplatform 风格 UI 组件库</string>
+    <string name="BasedOnLibXposed">此应用基于 libXposed API 101</string>
+    <string name="BasedOnLibXposedSummary">原生 Hook 写法</string>
+    <string name="BasedOnUpstream">此模块基于 Fuck_Home</string>
+    <string name="BasedOnUpstreamSummary">原作者 xiaowine 的实现</string>
+    <string name="SourceCode">源代码</string>
+    <string name="SourceCodeSummary">GitHub 仓库</string>
+    <string name="IssueTracker">问题反馈</string>
+    <string name="IssueTrackerSummary">提交问题或功能建议</string>
+    <string name="OpenSourceLicense">开源许可</string>
+    <string name="OpenSourceLicenseSummary">Apache-2.0</string>
+    <string name="AboutCopyright">© 2026 NotWayOut\n本项目基于 Apache-2.0 开源；产品名称与商标归各自权利人所有。</string>
+
 </resources>

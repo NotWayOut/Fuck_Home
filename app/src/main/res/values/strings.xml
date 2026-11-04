@@ -112,4 +112,20 @@
     <string name="blockmiui">blockmiui</string>
     <string name="warning">Warning if the remaining memory is less than 20%</string>
     <string name="CleanMode">Clean mode</string>
+    <!-- About page -->
+    <string name="Other">Other</string>
+    <string name="BasedOnMiuix">Built with miuix</string>
+    <string name="BasedOnMiuixSummary">Compose Multiplatform style UI component library</string>
+    <string name="BasedOnLibXposed">Built on libXposed API 101</string>
+    <string name="BasedOnLibXposedSummary">Native hook API</string>
+    <string name="BasedOnUpstream">Based on Fuck_Home</string>
+    <string name="BasedOnUpstreamSummary">Original implementation by xiaowine</string>
+    <string name="SourceCode">Source code</string>
+    <string name="SourceCodeSummary">GitHub repository</string>
+    <string name="IssueTracker">Issue tracker</string>
+    <string name="IssueTrackerSummary">Report issues or suggest features</string>
+    <string name="OpenSourceLicense">License</string>
+    <string name="OpenSourceLicenseSummary">Apache-2.0</string>
+    <string name="AboutCopyright">© 2026 NotWayOut\nOpen source under Apache-2.0; product names and trademarks belong to their respective owners.</string>
+
 </resources>
