@@ -8,10 +8,11 @@
 
 原项目说不允许分发，issue也很久没反应，所以不提供预构建产物
 
-## 效果展示
+## 效果
 
 <div align="center">
   <img src="Screenshot_2026-11-04-22-43-02-187_com.miui.home.webp" width="30%">
+ </div>
 
 ## 构建
 
